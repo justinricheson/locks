@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Locks
@@ -12,18 +13,25 @@ namespace Locks
             for (int i = 0; i < 1000; i++)
             {
                 _i = 0;
-                var l = new PetersonNLock(3);
-                var t1 = new Thread(() => Inc(0, l));
-                var t2 = new Thread(() => Inc(1, l));
-                var t3 = new Thread(() => Inc(2, l));
 
-                t1.Start();
-                t2.Start();
-                t3.Start();
+                var numThreads = 10;
+                var l = new FischerLock(10);
+                var ts = new List<Thread>();
+                for (int j = 0; j < numThreads; j++)
+                {
+                    ts.Add(new Thread(() => Inc(j, l)));
+                }
 
-                t1.Join();
-                t2.Join();
-                t3.Join();
+                foreach (var t in ts)
+                {
+                    t.Start();
+                }
+
+                foreach (var t in ts)
+                {
+                    t.Join();
+                }
+
                 Console.WriteLine(_i);
             }
 
@@ -34,10 +42,13 @@ namespace Locks
         {
             try
             {
-                for (int i = 0; i < 1000000; i++)
+                for (int i = 0; i < 1000; i++)
                 {
                     l.Request(pid);
-                    _i++;
+                    for (int j = 0; j < 1000; j++)
+                    {
+                        _i++;
+                    }
                     l.Release(pid);
                 }
             }

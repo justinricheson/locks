@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="BakeryLock.cs" />
     <Compile Include="ILock.cs" />
+    <Compile Include="NaiveLock.cs" />
+    <Compile Include="FischerLock.cs" />
     <Compile Include="NoLock.cs" />
     <Compile Include="PetersonLock.cs" />
     <Compile Include="PetersonNLock.cs" />
