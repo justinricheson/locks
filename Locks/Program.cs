@@ -15,7 +15,7 @@ namespace Locks
                 _i = 0;
 
                 var numThreads = 10;
-                var l = new LamportFast(numThreads);
+                var l = new FastCasLock();
                 var ts = new List<Thread>();
                 for (int j = 0; j < numThreads; j++)
                 {
