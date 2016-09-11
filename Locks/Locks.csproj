@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BakeryLock.cs" />
+    <Compile Include="CASLock.cs" />
     <Compile Include="ILock.cs" />
     <Compile Include="LamportFast.cs" />
     <Compile Include="NaiveLock.cs" />
