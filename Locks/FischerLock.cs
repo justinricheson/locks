@@ -3,7 +3,7 @@
 namespace Locks
 {
     /// <summary>
-    /// Naive, non-functional lock
+    /// Time-based lock, currently not working
     /// </summary>
     public class FischerLock : ILock
     {

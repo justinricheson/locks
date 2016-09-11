@@ -15,11 +15,12 @@ namespace Locks
                 _i = 0;
 
                 var numThreads = 10;
-                var l = new FischerLock(10);
+                var l = new LamportFast(numThreads);
                 var ts = new List<Thread>();
                 for (int j = 0; j < numThreads; j++)
                 {
-                    ts.Add(new Thread(() => Inc(j, l)));
+                    int k = j; // Capture j or all thread ids will be the same
+                    ts.Add(new Thread(() => Inc(k, l)));
                 }
 
                 foreach (var t in ts)
@@ -44,12 +45,12 @@ namespace Locks
             {
                 for (int i = 0; i < 1000; i++)
                 {
-                    l.Request(pid);
                     for (int j = 0; j < 1000; j++)
                     {
+                        l.Request(pid);
                         _i++;
+                        l.Release(pid);
                     }
-                    l.Release(pid);
                 }
             }
             catch (Exception ex)
