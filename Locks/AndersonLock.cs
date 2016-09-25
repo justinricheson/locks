@@ -11,7 +11,7 @@ namespace Locks
     public class AndersonLock : ILock
     {
         private int _numProcesses;
-        private int _next;
+        private int _next = -1;
         private int[] _slots;
         private bool[] _available;
 
@@ -20,14 +20,17 @@ namespace Locks
             _numProcesses = numProcesses;
             _slots = new int[numProcesses];
             _available = new bool[numProcesses];
-            _available[1] = true;
+            _available[0] = true;
         }
 
         public void Request(int pid)
         {
             _slots[pid] = Interlocked.Increment(ref _next) % _numProcesses;
             Thread.MemoryBarrier();
-            while (!_available[_slots[pid]]) ;
+            while (!_available[_slots[pid]])
+            {
+                Thread.Sleep(0);
+            }
         }
 
         public void Release(int pid)

@@ -14,7 +14,7 @@ namespace Locks
             {
                 _i = 0;
 
-                var numThreads = 3;
+                var numThreads = 10;
                 var l = new AndersonLock(numThreads);
                 var ts = new List<Thread>();
                 for (int j = 0; j < numThreads; j++)
@@ -43,9 +43,9 @@ namespace Locks
         {
             try
             {
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 100; i++)
                 {
-                    for (int j = 0; j < 1000; j++)
+                    for (int j = 0; j < 100; j++)
                     {
                         l.Request(pid);
                         _i++;
